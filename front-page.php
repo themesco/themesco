@@ -61,7 +61,7 @@
                         echo '<h1>'.esc_attr($heading_text).'<h1>';
                     }
 
-$args = array( 'post_type' => 'product', 'posts_per_page' => 2 ,'order' => 'desc', 'showposts' => 2);
+$args = array( 'post_type' => 'download', 'posts_per_page' => 2 ,'order' => 'desc', 'showposts' => 2);
             $the_query = new WP_Query( $args ); 
             if ( $the_query->have_posts() ) : 
                 echo '<div class="row row-centered latest-elements">';
@@ -76,7 +76,7 @@ $args = array( 'post_type' => 'product', 'posts_per_page' => 2 ,'order' => 'desc
 ?>
                 <div class="col-md-6 latest-showcase-themesco">
                     <div class="latest-img-overlay">
-                        <?php the_post_thumbnail( 'latest-thumb', array( 'class' => 'img-thumbnail img-responsive latest-thumb' ) ); ?>
+                        <?php the_post_thumbnail( 'latest-thumb', array( 'class' => 'img-responsive latest-thumb' ) ); ?>
                         <div class="overlay img-overlay center-block">
                             <h3><?php the_title();?></h3>
                             <?php

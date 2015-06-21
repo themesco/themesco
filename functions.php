@@ -16,9 +16,7 @@ if ( ! function_exists( 'themesco_setup' ) ) :
 function themesco_setup() {
     
     add_image_size( 'latest-thumb', 520, 520, true ); // (cropped)
-    add_image_size( 'thumbnail', 520, 520, true );
-    add_image_size( 'tw_shop_single', 520, 520, true );
-	/*
+    /*
 	 * Make theme available for translation.
 	 * Translations can be filed in the /languages/ directory.
 	 * If you're building a theme based on themesco, use a find and replace
@@ -258,62 +256,3 @@ function custom_post_type() {
 */
 
 add_action( 'init', 'custom_post_type', 0 );
-
-
-add_action( 'after_setup_theme', 'woocommerce_support' );
-function woocommerce_support() {
-    add_theme_support( 'woocommerce' );
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function yourtheme_woocommerce_image_dimensions() {
-	global $pagenow;
- 
-	if ( ! isset( $_GET['activated'] ) || $pagenow != 'themes.php' ) {
-		return;
-	}
-
-  	$catalog = array(
-		'width' 	=> '1200',	// px
-		'height'	=> '1200',	// px
-		'crop'		=> 1 		// true
-	);
-
-	$single = array(
-		'width' 	=> '1200',	// px
-		'height'	=> '1200',	// px
-		'crop'		=> 1 		// true
-	);
-
-	$thumbnail = array(
-		'width' 	=> '1200',	// px
-		'height'	=> '1200',	// px
-		'crop'		=> 0 		// false
-	);
-
-	// Image sizes
-	update_option( 'shop_catalog_image_size', $catalog ); 		// Product category thumbs
-	update_option( 'shop_single_image_size', $single ); 		// Single product image
-	update_option( 'shop_thumbnail_image_size', $thumbnail ); 	// Image gallery thumbs
-}
-
-add_action( 'after_switch_theme', 'yourtheme_woocommerce_image_dimensions', 1 );

@@ -1093,22 +1093,29 @@ navbar-collapse collapsing {
     line-height: 35px
 }
 
+/*
 .latest-section .latest-elements {
     margin-top: 30px;
     display: inline-block;
 }
+*/
 
 .latest-thumb {
-    border: 7px solid #dedcda;
+    padding: 0;
+    width: 100%;
    
+}
+
+.latest-thumb:hover .latest-img-overlay{
+    display: block;
 }
 
 .latest-img-overlay {
     position: relative;
+    border: 7px solid #dedcda;
 }
 
 .img-overlay {
-    border: 7px solid #dedcda;
     opacity: 0;
     position: absolute;
     top: 0;
