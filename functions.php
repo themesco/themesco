@@ -16,6 +16,8 @@ if ( ! function_exists( 'themesco_setup' ) ) :
 function themesco_setup() {
     
     add_image_size( 'latest-thumb', 520, 520, true ); // (cropped)
+    add_image_size( 'thumbnail', 520, 520, true );
+    add_image_size( 'tw_shop_single', 520, 520, true );
 	/*
 	 * Make theme available for translation.
 	 * Translations can be filed in the /languages/ directory.
@@ -102,7 +104,12 @@ add_action( 'after_setup_theme', 'themesco_content_width', 0 );
  *
  * @link http://codex.wordpress.org/Function_Reference/register_sidebar
  */
+
+require_once ( 'inc/class/themesco-why-section-widget.php');
+
 function themesco_widgets_init() {
+    register_widget( 'themesco_why_section_widget' );
+    
 	register_sidebar( array(
 		'name'          => esc_html__( 'Sidebar', 'themesco' ),
 		'id'            => 'sidebar-1',
@@ -112,6 +119,24 @@ function themesco_widgets_init() {
 		'before_title'  => '<h1 class="widget-title">',
 		'after_title'   => '</h1>',
 	) );
+    
+    
+    register_sidebar( array(
+        'name' => __( 'Why Section boxes', 'themesco' ),
+        'id' => 'sidebar-2',
+    ) );
+    
+    
+    register_sidebar( array(
+		'name'          => esc_html__( 'Footer', 'themesco' ),
+		'id'            => 'sidebar-3',
+		'description'   => '',
+		'before_widget' => '<div class="col-md-4 footer-widget">',
+		'after_widget'  => '</div>',
+		'before_title'  => '<h4>',
+		'after_title'   => '</h4>',
+	) );
+    
 }
 add_action( 'widgets_init', 'themesco_widgets_init' );
 
@@ -135,6 +160,14 @@ function themesco_scripts() {
 	}
 }
 add_action( 'wp_enqueue_scripts', 'themesco_scripts' );
+
+
+add_action('admin_enqueue_scripts', 'themesco_widget_scripts');
+function themesco_widget_scripts() {
+    wp_enqueue_media();
+    wp_enqueue_script('themesco_why_widget', get_template_directory_uri() . '/js/why-widget.js', array('jquery'), '1.0', true);
+}
+
 
 /**
  * Implement the Custom Header feature.
@@ -225,3 +258,62 @@ function custom_post_type() {
 */
 
 add_action( 'init', 'custom_post_type', 0 );
+
+
+add_action( 'after_setup_theme', 'woocommerce_support' );
+function woocommerce_support() {
+    add_theme_support( 'woocommerce' );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function yourtheme_woocommerce_image_dimensions() {
+	global $pagenow;
+ 
+	if ( ! isset( $_GET['activated'] ) || $pagenow != 'themes.php' ) {
+		return;
+	}
+
+  	$catalog = array(
+		'width' 	=> '1200',	// px
+		'height'	=> '1200',	// px
+		'crop'		=> 1 		// true
+	);
+
+	$single = array(
+		'width' 	=> '1200',	// px
+		'height'	=> '1200',	// px
+		'crop'		=> 1 		// true
+	);
+
+	$thumbnail = array(
+		'width' 	=> '1200',	// px
+		'height'	=> '1200',	// px
+		'crop'		=> 0 		// false
+	);
+
+	// Image sizes
+	update_option( 'shop_catalog_image_size', $catalog ); 		// Product category thumbs
+	update_option( 'shop_single_image_size', $single ); 		// Single product image
+	update_option( 'shop_thumbnail_image_size', $thumbnail ); 	// Image gallery thumbs
+}
+
+add_action( 'after_switch_theme', 'yourtheme_woocommerce_image_dimensions', 1 );
