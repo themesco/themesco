@@ -26,7 +26,7 @@
    
                 }
 
-            $args = array( 'post_type' => 'themes', 'posts_per_page' => 3 ,'orderby' => 'rand');
+            $args = array( 'post_type' => 'download', 'posts_per_page' => 3 ,'orderby' => 'rand');
             $the_query = new WP_Query( $args ); 
             $it = 0;
             if ( $the_query->have_posts() ) : 
@@ -61,7 +61,7 @@
                         echo '<h1>'.esc_attr($heading_text).'<h1>';
                     }
 
-$args = array( 'post_type' => 'themes', 'posts_per_page' => 2 ,'order' => 'desc', 'showposts' => 2);
+$args = array( 'post_type' => 'download', 'posts_per_page' => 2 ,'order' => 'desc', 'showposts' => 2);
             $the_query = new WP_Query( $args ); 
             if ( $the_query->have_posts() ) : 
                 echo '<div class="row row-centered latest-elements">';
@@ -72,20 +72,20 @@ $args = array( 'post_type' => 'themes', 'posts_per_page' => 2 ,'order' => 'desc'
                                               
                 while ( $the_query->have_posts() ) : $the_query->the_post();
                     $post_id = get_the_ID();
-                    $categories = get_the_category( $post_id );
+                    $categories = get_the_terms($post_id, 'download_category' );
 ?>
                 <div class="col-md-6 latest-showcase-themesco">
                     <div class="latest-img-overlay">
-                        <?php the_post_thumbnail( 'latest-thumb', array( 'class' => 'img-thumbnail img-responsive latest-thumb' ) ); ?>
+                        <?php the_post_thumbnail( 'latest-thumb', array( 'class' => 'img-responsive latest-thumb' ) ); ?>
                         <div class="overlay img-overlay center-block">
                             <h3><?php the_title();?></h3>
                             <?php
                                 if(!empty($categories)){
-                                    echo '<p>';
+                                    echo '<ul class="theme-categories">';
                                     foreach($categories as $cat){
-                                        echo ' | '.$cat->name.' | ';
+                                        echo  '<li>'.$cat->name.'</li>';
                                     }
-                                    echo '</p>';
+                                    echo '</ul>';
                                 }
                             ?>
                            
@@ -117,6 +117,66 @@ $args = array( 'post_type' => 'themes', 'posts_per_page' => 2 ,'order' => 'desc'
            
         </div>
     </div>
+
+    <!--=========================Why should you choose us============================================-->
+
+    <div class="why-section">
+        <div class="container">
+            <?php
+            $why_section_header = get_theme_mod('why_section_header',__('Why you should choose our Themes?', 'themesco'));
+                if(!empty($why_section_header)) {
+                    echo '<h1>'.esc_attr($why_section_header).'</h1>';
+                    }
+        ?>
+        <div class="row row-centered why-elements text-center">
+            <?php if ( is_active_sidebar( 'sidebar-2' ) ) : ?>
+	<ul class="why-elements">
+		<?php dynamic_sidebar( 'sidebar-2' ); ?>
+	</ul>
+<?php endif; ?>   
+            </div> 
+        </div>
+</div>
+
+
+ <!--=========================What are WordPress themes===========================================-->
+    <div class="what-section">
+        <div class="container">
+            <?php
+            $what_section_header = get_theme_mod('what_section_header',__('What are WordPress Themes?', 'themesco'));
+                if(!empty($what_section_header)) {
+                    echo '<h1>'.esc_attr($what_section_header).'</h1>';
+                    }
+        ?>
+        
+
+        <div class="row row-centered what-elements text-left">
+            
+            
+
+            <div class="col-md-6 what-col col-fixed col-centered">
+                
+                <?php
+            $textarea_text_setting = get_theme_mod('textarea_text_setting');
+                if(!empty($textarea_text_setting)) {
+                    echo $textarea_text_setting;
+                    }
+        ?>   
+            </div>
+            <div class="col-md-6 what-col col-fixed col-centered">
+               <?php
+            $textarea2_text_setting = get_theme_mod('textarea2_text_setting');
+                if(!empty($textarea2_text_setting)) {
+                    echo $textarea2_text_setting;
+                    }
+        ?>   
+                
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
 
 

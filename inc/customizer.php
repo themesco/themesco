@@ -192,9 +192,81 @@ function themesco_customize_register( $wp_customize ) {
         'settings' => 'lt_red_button',
         'priority' => 3
     ));
+    
+    $wp_customize->add_section( 'themesco_why_section' , array(
+		'title'       => __( 'Why Section Controls', 'themesco' ),
+      	'priority'    => 32,
+      	'description' => __('Why Section Controls','themesco'),
+	));
+	
+    
+	/* Heading	*/
+	$wp_customize->add_setting(
+    'why_section_header',
+    array(
+        'default' => __("Why you should choose our Themes?",'themesco'),
+        'sanitize_callback' => 'themesco_sanitize_text' 
+    ));
+    
+    
+    $wp_customize->add_control(
+    'why_section_header',
+    array(
+        'label' => __('Heading','themesco'),
+        'section' => 'themesco_why_section',
+        'type' => 'text',
+        'settings' => 'why_section_header',
+        'priority' => 1
+    ));
+    
 
+
+    $wp_customize->add_section( 'themesco_what_section' , array(
+		'title'       => __( 'What Section Controls', 'themesco' ),
+      	'priority'    => 33,
+      	'description' => __('What Section Controls','themesco'),
+	));
+	
+    
+	/* Heading	*/
+	$wp_customize->add_setting(
+    'what_section_header',
+    array(
+        'default' => __("What are WordPress Themes?",'themesco'),
+        'sanitize_callback' => 'themesco_sanitize_text' 
+    ));
     
     
+    $wp_customize->add_control(
+    'what_section_header',
+    array(
+        'label' => __('Heading','themesco'),
+        'section' => 'themesco_what_section',
+        'type' => 'text',
+        'settings' => 'what_section_header',
+        'priority' => 1
+    ));
+    
+    require_once dirname(__FILE__). '/class/text-area-control.php';
+        $wp_customize->add_setting( 'textarea_text_setting', array(
+            'default'        => '',
+        ) );
+        $wp_customize->add_control( new Textarea_Custom_Control( $wp_customize, 'textarea_text_setting', array(
+            'label'   => __('Why section text area','themesco'),
+            'section' => 'themesco_what_section',
+            'settings'   => 'textarea_text_setting',
+            'priority' => 2
+        ) ) ) ;
+    
+        $wp_customize->add_setting( 'textarea2_text_setting', array(
+            'default'        => '',
+        ) );
+        $wp_customize->add_control( new Textarea_Custom_Control( $wp_customize, 'textarea2_text_setting', array(
+            'label'   => __('Why section text area 2','themesco'),
+            'section' => 'themesco_what_section',
+            'settings'   => 'textarea2_text_setting',
+            'priority' => 3
+        ) ) ) ;
     
 }
 add_action( 'customize_register', 'themesco_customize_register' );

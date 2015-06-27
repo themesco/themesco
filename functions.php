@@ -16,7 +16,7 @@ if ( ! function_exists( 'themesco_setup' ) ) :
 function themesco_setup() {
     
     add_image_size( 'latest-thumb', 520, 520, true ); // (cropped)
-	/*
+    /*
 	 * Make theme available for translation.
 	 * Translations can be filed in the /languages/ directory.
 	 * If you're building a theme based on themesco, use a find and replace
@@ -102,7 +102,12 @@ add_action( 'after_setup_theme', 'themesco_content_width', 0 );
  *
  * @link http://codex.wordpress.org/Function_Reference/register_sidebar
  */
+
+require_once ( 'inc/class/themesco-why-section-widget.php');
+
 function themesco_widgets_init() {
+    register_widget( 'themesco_why_section_widget' );
+    
 	register_sidebar( array(
 		'name'          => esc_html__( 'Sidebar', 'themesco' ),
 		'id'            => 'sidebar-1',
@@ -112,6 +117,24 @@ function themesco_widgets_init() {
 		'before_title'  => '<h1 class="widget-title">',
 		'after_title'   => '</h1>',
 	) );
+    
+    
+    register_sidebar( array(
+        'name' => __( 'Why Section boxes', 'themesco' ),
+        'id' => 'sidebar-2',
+    ) );
+    
+    
+    register_sidebar( array(
+		'name'          => esc_html__( 'Footer', 'themesco' ),
+		'id'            => 'sidebar-3',
+		'description'   => '',
+		'before_widget' => '<div class="col-md-4 footer-widget">',
+		'after_widget'  => '</div>',
+		'before_title'  => '<h4>',
+		'after_title'   => '</h4>',
+	) );
+    
 }
 add_action( 'widgets_init', 'themesco_widgets_init' );
 
@@ -135,6 +158,14 @@ function themesco_scripts() {
 	}
 }
 add_action( 'wp_enqueue_scripts', 'themesco_scripts' );
+
+
+add_action('admin_enqueue_scripts', 'themesco_widget_scripts');
+function themesco_widget_scripts() {
+    wp_enqueue_media();
+    wp_enqueue_script('themesco_why_widget', get_template_directory_uri() . '/js/why-widget.js', array('jquery'), '1.0', true);
+}
+
 
 /**
  * Implement the Custom Header feature.
@@ -162,66 +193,18 @@ require get_template_directory() . '/inc/customizer.php';
 require get_template_directory() . '/inc/jetpack.php';
 
 
-/* ---------------------------------------------------
------------------themes custom post type -------------
-----------------------------------------------------*/
-
-
-function custom_post_type() {
-
-// Set UI labels for Custom Post Type
-	$labels = array(
-		'name'                => _x( 'Themes', 'Post Type General Name', 'themesco' ),
-		'singular_name'       => _x( 'Theme', 'Post Type Singular Name', 'themesco' ),
-		'menu_name'           => __( 'Themes', 'themesco' ),
-		'parent_item_colon'   => __( 'Parent Theme', 'themesco' ),
-		'all_items'           => __( 'All Themes', 'themesco' ),
-		'view_item'           => __( 'View Theme', 'themesco' ),
-		'add_new_item'        => __( 'Add New Theme', 'themesco' ),
-		'add_new'             => __( 'Add New', 'themesco' ),
-		'edit_item'           => __( 'Edit Theme', 'themesco' ),
-		'update_item'         => __( 'Update Theme', 'themesco' ),
-		'search_items'        => __( 'Search Theme', 'themesco' ),
-		'not_found'           => __( 'Not Found', 'themesco' ),
-		'not_found_in_trash'  => __( 'Not found in Trash', 'themesco' ),
-	);
-	
-// Set other options for Custom Post Type
-	
-	$args = array(
-		'label'               => __( 'themes', 'themesco' ),
-		'description'         => __( 'Our awesome themes', 'themesco' ),
-		'labels'              => $labels,
-		// Features this CPT supports in Post Editor
-		'supports'            => array( 'title', 'editor', 'thumbnail', 'revisions'),
-		// You can associate this CPT with a taxonomy or custom taxonomy. 
-		'taxonomies'          => array( 'category' ),
-		/* A hierarchical CPT is like Pages and can have
-		* Parent and child items. A non-hierarchical CPT
-		* is like Posts.
-		*/	
-		'hierarchical'        => false,
-		'public'              => true,
-		'show_ui'             => true,
-		'show_in_menu'        => true,
-		'show_in_nav_menus'   => true,
-		'show_in_admin_bar'   => true,
-		'menu_position'       => 2,
-		'can_export'          => true,
-		'has_archive'         => true,
-		'exclude_from_search' => false,
-		'publicly_queryable'  => true,
-		'capability_type'     => 'page',
-	);
-	
-	// Registering your Custom Post Type
-	register_post_type( 'themes', $args );
-
-}
 
 /* Hook into the 'init' action so that the function
 * Containing our post type registration is not 
 * unnecessarily executed. 
 */
 
-add_action( 'init', 'custom_post_type', 0 );
+if (class_exists('MultiPostThumbnails')) {
+    new MultiPostThumbnails(
+        array(
+            'label' => 'Secondary Image',
+            'id' => 'secondary-image',
+            'post_type' => 'download'
+        )
+    );
+}
