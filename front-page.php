@@ -26,7 +26,7 @@
    
                 }
 
-            $args = array( 'post_type' => 'themes', 'posts_per_page' => 3 ,'orderby' => 'rand');
+            $args = array( 'post_type' => 'download', 'posts_per_page' => 3 ,'orderby' => 'rand');
             $the_query = new WP_Query( $args ); 
             $it = 0;
             if ( $the_query->have_posts() ) : 
@@ -72,7 +72,7 @@ $args = array( 'post_type' => 'download', 'posts_per_page' => 2 ,'order' => 'des
                                               
                 while ( $the_query->have_posts() ) : $the_query->the_post();
                     $post_id = get_the_ID();
-                    $categories = get_the_category( $post_id );
+                    $categories = get_the_terms($post_id, 'download_category' );
 ?>
                 <div class="col-md-6 latest-showcase-themesco">
                     <div class="latest-img-overlay">
@@ -81,11 +81,11 @@ $args = array( 'post_type' => 'download', 'posts_per_page' => 2 ,'order' => 'des
                             <h3><?php the_title();?></h3>
                             <?php
                                 if(!empty($categories)){
-                                    echo '<p>';
+                                    echo '<ul class="theme-categories">';
                                     foreach($categories as $cat){
-                                        echo ' | '.$cat->name.' | ';
+                                        echo  '<li>'.$cat->name.'</li>';
                                     }
-                                    echo '</p>';
+                                    echo '</ul>';
                                 }
                             ?>
                            

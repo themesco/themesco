@@ -1139,6 +1139,7 @@ navbar-collapse collapsing {
     font-weight: 800;
     text-transform: uppercase;
     color: #000000;
+    margin-bottom: 0;
 }
 
 .img-overlay p {
@@ -1154,13 +1155,13 @@ navbar-collapse collapsing {
 }
 
 .btn-demo {
-    border: 3px solid #b0cd88;
+    border: 3px solid #77a53e;
     margin: 0 5px;
     text-transform: uppercase;
     color: #fff;
     font-weight: 800;
     font-size: 21px;
-    background-color: #b0cd88;
+    background-color: #77a53e;
     padding: 1px 20px 1px 20px;
     transition: background-color 0.5s ease;
 }
@@ -1172,13 +1173,13 @@ navbar-collapse collapsing {
 }
 
 .btn-details {
-    border: 3px solid #ed9e97;
+    border: 3px solid #e67d74;
     margin: 0 5px;
     text-transform: uppercase;
     color: #fff;
     font-weight: 800;
     font-size: 21px;
-    background-color: #ed9e97;
+    background-color: #e67d74;
     padding: 1px 10px 1px 10px;
     transition: background-color 0.5s ease;
 }
@@ -1187,6 +1188,31 @@ navbar-collapse collapsing {
     color: #000;
     border-color: #000;
     background-color: rgba(0, 0, 0, 0);
+}
+
+.theme-categories {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    line-height: 10px;
+    margin-bottom: 25px;
+}
+.theme-categories li {
+    font-size: 14px;
+     display:inline;
+}
+
+.theme-categories li:after {
+    content:'/';
+    padding: 0 5px;
+}
+
+.theme-categories li:last-child:after {
+    content:'';
+}
+
+.single-theme-details h1 {
+    margin-bottom: 5px;
 }
 
 
@@ -1355,6 +1381,47 @@ footer ul {
 .footer-widget a:visited {
      color:#0f0e0d;
 }
+
+/*----------------------------------------------
+#Theme Single
+-----------------------------------------------*/
+.themesco-single-theme{
+background-color: rgba(255, 255, 255, 0.79);
+    margin: 0;
+    padding-top: 83px;
+    padding-bottom: 50px;
+    color: #84817f;
+    font-weight: 600;
+}
+
+.themesco-single-theme h1 {
+    color:#77a53e;
+}
+
+
+.edd-submit.button.blue {
+    border: 3px solid #e67d74;
+    margin: 0 5px;
+    text-transform: uppercase;
+    color: #fff;
+    font-weight: 800;
+    font-size: 21px;
+    background-color: #e67d74;
+    padding: 1px 10px 1px 10px;
+    transition: background-color 0.5s ease;
+    float:left;
+    margin-left:0;
+
+}
+
+.edd-submit.button.blue:hover {
+    color: #000;
+    border-color: #000;
+    background-color: rgba(0, 0, 0, 0);
+    
+}
+
+
 
 /*----------------------------------------------
 #Responsive
